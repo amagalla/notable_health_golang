@@ -1,0 +1,66 @@
+---
+version: "3.7"
+services:
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile_React
+    image: react-app
+    container_name: react-container
+    volumes:
+      - .:/app
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
+    stdin_open: true
+    tty: true
+    networks:
+      - app
+    command: npm run client
+    depends_on:
+      - server
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: server
+    container_name: golang-container
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: "physicians"
+      DB_PASSWORD: "docter"
+      DB_NAME: "appointments"
+      WAIT_HOSTS: mysql:3306
+      WAIT_HOSTS_TIMEOUT: 100
+      WAIT_SLEEP_INTERVAL: 10
+      WAIT_HOST_CONNECT_TIMEOUT: 10
+    volumes:
+      - ./:/app
+    depends_on:
+      - mysql
+    networks:
+      - app
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-container
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=appointments
+      - MYSQL_USER=physicians
+      - MYSQL_PASSWORD=docter
+    volumes:
+      - ./pckg/db/:/docker-entrypoint-initdb.d
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge
