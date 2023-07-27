@@ -7,7 +7,7 @@ import (
 )
 
 func RegisterRoutes(router *gin.Engine) {
-	router.POST("/insertPhysician", schedules.PostPhysicians)
+	router.GET("/api/getPhysicians", schedules.GetPhysicians)
 
-	router.GET("/getPhysicianList", schedules.GetPhysician)
+	router.POST("/api/insertPhysician", schedules.PostPhysician)
 }

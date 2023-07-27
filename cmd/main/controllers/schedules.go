@@ -6,7 +6,7 @@ import (
 	"notable_health/pckg/db"
 )
 
-func InsertPhysician(physicians *models.Physicians) error {
+func InsertPhysician(physicians *models.PostPhysiciansData) error {
 	db := db.GetDB()
 
 	query, err := db.Prepare(
@@ -28,7 +28,7 @@ func InsertPhysician(physicians *models.Physicians) error {
 	return nil
 }
 
-func GetPhysicianList() ([]models.PhysicanData, error) {
+func GetPhysicianList() ([]models.GetPhysicanData, error) {
 	db := db.GetDB()
 
 	rows, err := db.Query("SELECT * FROM physicians")
@@ -37,10 +37,10 @@ func GetPhysicianList() ([]models.PhysicanData, error) {
 		return nil, fmt.Errorf("error querying for list of physicians")
 	}
 
-	var physicianList []models.PhysicanData
+	var physicianList []models.GetPhysicanData
 
 	for rows.Next() {
-		var physicanData models.PhysicanData
+		var physicanData models.GetPhysicanData
 
 		if err := rows.Scan(
 			&physicanData.PhysicanID,

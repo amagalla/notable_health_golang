@@ -7,11 +7,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func PostPhysicians(c *gin.Context) {
-	// create a struct with expected values
-	var physicians models.Physicians
+func PostPhysician(c *gin.Context) {
+	var physicians models.PostPhysiciansData
 
-	// parse data to struct
 	if err := c.BindJSON(&physicians); err != nil {
 		c.JSON(400, gin.H{
 			"error": "Failed to parse request body",
@@ -20,7 +18,6 @@ func PostPhysicians(c *gin.Context) {
 		return
 	}
 
-	// pass struct as pointer to contoller
 	if err := controllers.InsertPhysician(&physicians); err != nil {
 		c.JSON(400, gin.H{
 			"error": err.Error(),
@@ -34,7 +31,7 @@ func PostPhysicians(c *gin.Context) {
 	})
 }
 
-func GetPhysician(c *gin.Context) {
+func GetPhysicians(c *gin.Context) {
 	physicanListResp, err := controllers.GetPhysicianList()
 
 	if err != nil {
@@ -45,7 +42,7 @@ func GetPhysician(c *gin.Context) {
 		return
 	}
 
-	resp := models.PhysicianDataList{
+	resp := models.GetPhysicianResponse{
 		PhysicianList: physicanListResp,
 	}
 
