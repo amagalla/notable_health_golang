@@ -1,11 +1,11 @@
 package routes
 
 import (
-	"notable_health/cmd/main/routes/sample"
+	"notable_health/cmd/main/routes/schedules"
 
 	"github.com/gin-gonic/gin"
 )
 
 func RegisterRoutes(router *gin.Engine) {
-	router.GET("/", sample.LandingPage)
+	router.POST("/insertPhysician", schedules.PostPhysicians)
 }

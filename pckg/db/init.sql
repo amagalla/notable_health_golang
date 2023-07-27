@@ -4,8 +4,8 @@ USE appointments;
 
 CREATE TABLE IF NOT EXISTS physicians (
     physician_id        BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    first_name          VARCHAR(255) NOT NULL,
-    last_name           VARCHAR(255) NOT NULL,
+    physician_first_name          VARCHAR(255) NOT NULL,
+    physician_last_name           VARCHAR(255) NOT NULL,
     PRIMARY KEY (physician_id)
 );
 
