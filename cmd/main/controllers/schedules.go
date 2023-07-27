@@ -28,7 +28,7 @@ func InsertPhysician(physicians *models.Physicians) error {
 	return nil
 }
 
-func GetPhysicians() ([]models.PhysicianData, error) {
+func GetPhysicianList() ([]models.PhysicanData, error) {
 	db := db.GetDB()
 
 	rows, err := db.Query("SELECT * FROM physicians")
@@ -37,19 +37,20 @@ func GetPhysicians() ([]models.PhysicianData, error) {
 		return nil, fmt.Errorf("error querying for list of physicians")
 	}
 
-	var physicianList []models.PhysicianData
+	var physicianList []models.PhysicanData
 
 	for rows.Next() {
-		var physician models.PhysicianData
+		var physicanData models.PhysicanData
 
 		if err := rows.Scan(
-			&physician.PhysicianID,
-			&physician.FirstName,
-			&physician.LastName,
+			&physicanData.PhysicanID,
+			&physicanData.FirstName,
+			&physicanData.LastName,
 		); err != nil {
 			return nil, fmt.Errorf("error scanning rows")
 		}
-		physicianList = append(physicianList, physician)
+
+		physicianList = append(physicianList, physicanData)
 	}
 
 	return physicianList, nil

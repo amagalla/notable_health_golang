@@ -34,8 +34,8 @@ func PostPhysicians(c *gin.Context) {
 	})
 }
 
-func GetPhysicianList(c *gin.Context) {
-	getListResponse, err := controllers.GetPhysicians()
+func GetPhysician(c *gin.Context) {
+	physicanListResp, err := controllers.GetPhysicianList()
 
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -45,8 +45,8 @@ func GetPhysicianList(c *gin.Context) {
 		return
 	}
 
-	resp := models.PhysicianResponse{
-		PhysicianList: getListResponse,
+	resp := models.PhysicianDataList{
+		PhysicianList: physicanListResp,
 	}
 
 	c.JSON(200, resp)

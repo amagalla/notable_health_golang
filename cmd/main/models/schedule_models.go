@@ -5,12 +5,12 @@ type Physicians struct {
 	LastName  string `json:"physician_last_name"`
 }
 
-type PhysicianResponse struct {
-	PhysicianList []PhysicianData
+type PhysicianDataList struct {
+	PhysicianList []PhysicanData
 }
 
-type PhysicianData struct {
-	PhysicianID int    `json:"physician_id"`
-	FirstName   string `json:"physician_first_name"`
-	LastName    string `json:"physician_last_name"`
+type PhysicanData struct {
+	PhysicanID int    `json:"physican_id"`
+	FirstName  string `json:"physician_first_name"`
+	LastName   string `json:"physician_last_name"`
 }
