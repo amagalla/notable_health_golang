@@ -8,7 +8,6 @@ import (
 
 func InsertPhysician(physicians *models.Physicians) error {
 	db := db.GetDB()
-	defer db.Close()
 
 	query, err := db.Prepare(
 		"INSERT INTO physicians " +
@@ -20,8 +19,6 @@ func InsertPhysician(physicians *models.Physicians) error {
 		return fmt.Errorf("failed to create insert query")
 	}
 
-	defer query.Close()
-
 	_, err = query.Exec(physicians.FirstName, physicians.LastName)
 
 	if err != nil {
@@ -29,4 +26,31 @@ func InsertPhysician(physicians *models.Physicians) error {
 	}
 
 	return nil
+}
+
+func GetPhysicians() ([]models.PhysicianData, error) {
+	db := db.GetDB()
+
+	rows, err := db.Query("SELECT * FROM physicians")
+
+	if err != nil {
+		return nil, fmt.Errorf("error querying for list of physicians")
+	}
+
+	var physicianList []models.PhysicianData
+
+	for rows.Next() {
+		var physician models.PhysicianData
+
+		if err := rows.Scan(
+			&physician.PhysicianID,
+			&physician.FirstName,
+			&physician.LastName,
+		); err != nil {
+			return nil, fmt.Errorf("error scanning rows")
+		}
+		physicianList = append(physicianList, physician)
+	}
+
+	return physicianList, nil
 }

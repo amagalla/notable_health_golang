@@ -33,3 +33,21 @@ func PostPhysicians(c *gin.Context) {
 		"message": "physicians inserted into table",
 	})
 }
+
+func GetPhysicianList(c *gin.Context) {
+	getListResponse, err := controllers.GetPhysicians()
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+
+		return
+	}
+
+	resp := models.PhysicianResponse{
+		PhysicianList: getListResponse,
+	}
+
+	c.JSON(200, resp)
+}
