@@ -8,6 +8,7 @@ import (
 
 func InsertPhysician(physicians *models.Physicians) error {
 	db := db.GetDB()
+	defer db.Close()
 
 	query, err := db.Prepare(
 		"INSERT INTO physicians " +
@@ -18,6 +19,8 @@ func InsertPhysician(physicians *models.Physicians) error {
 	if err != nil {
 		return fmt.Errorf("failed to create insert query")
 	}
+
+	defer query.Close()
 
 	_, err = query.Exec(physicians.FirstName, physicians.LastName)
 

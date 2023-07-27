@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS appointments;
+CREATE DATABASE IF NOT EXISTS notable_health;
 
-USE appointments;
+USE notable_health;
 
 CREATE TABLE IF NOT EXISTS physicians (
     physician_id        BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,

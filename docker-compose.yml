@@ -35,7 +35,7 @@ services:
       DB_PORT: 3306
       DB_USER: "physicians"
       DB_PASSWORD: "docter"
-      DB_NAME: "appointments"
+      DB_NAME: "notable_health"
       WAIT_HOSTS: mysql:3306
       WAIT_HOSTS_TIMEOUT: 100
       WAIT_SLEEP_INTERVAL: 10
@@ -53,7 +53,7 @@ services:
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=appointments
+      - MYSQL_DATABASE=notable_health
       - MYSQL_USER=physicians
       - MYSQL_PASSWORD=docter
     volumes:
