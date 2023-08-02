@@ -55,3 +55,33 @@ func GetPhysicianList() ([]models.GetPhysicanData, error) {
 
 	return physicianList, nil
 }
+
+func PostAppointmentData(appointment *models.PostAppointmentData) error {
+	db := db.GetDB()
+
+	query, err := db.Prepare(
+		"INSERT INTO appointment " +
+			"(patient_first_name, patient_last_name, scheduled_date, " +
+			"scheduled_time, kind, physician_id) " +
+			"VALUES (?, ?, ?, ?, ?, ?)",
+	)
+
+	if err != nil {
+		return fmt.Errorf("error preparing query")
+	}
+
+	_, err = query.Exec(
+		appointment.PatientFirstName,
+		appointment.PatientLastName,
+		appointment.ScheduledDate,
+		appointment.ScheduledTime,
+		appointment.Kind,
+		appointment.PhysicianID,
+	)
+
+	if err != nil {
+		return fmt.Errorf("error executing query")
+	}
+
+	return nil
+}

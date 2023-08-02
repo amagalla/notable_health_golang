@@ -10,4 +10,5 @@ func RegisterRoutes(router *gin.Engine) {
 	router.GET("/api/getPhysicians", schedules.GetPhysicians)
 
 	router.POST("/api/insertPhysician", schedules.PostPhysician)
+	router.POST("/api/postAppointment", schedules.PostAppointment)
 }

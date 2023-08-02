@@ -48,3 +48,27 @@ func GetPhysicians(c *gin.Context) {
 
 	c.JSON(200, resp)
 }
+
+func PostAppointment(c *gin.Context) {
+	var appointmentData models.PostAppointmentData
+
+	if err := c.BindJSON(&appointmentData); err != nil {
+		c.JSON(400, gin.H{
+			"message": "error binding json",
+		})
+
+		return
+	}
+
+	if err := controllers.PostAppointmentData(&appointmentData); err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"success": "appointment created",
+	})
+}
