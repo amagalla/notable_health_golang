@@ -36,6 +36,14 @@ func InsertPhysician(c *gin.Context) {
 		return
 	}
 
+	if err := controller.CheckValidPhysician(&reqBody); err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+
+		return
+	}
+
 	if err := controller.InsertPhysicianData(&reqBody); err != nil {
 		c.JSON(400, gin.H{
 			"error": "error inserting request data",
