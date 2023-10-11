@@ -33,8 +33,8 @@ services:
     environment:
       DB_HOST: mysql
       DB_PORT: 3306
-      DB_USER: "physicians"
-      DB_PASSWORD: "docter"
+      DB_USER: "physician"
+      DB_PASSWORD: "health"
       DB_NAME: "notable_health"
       WAIT_HOSTS: mysql:3306
       WAIT_HOSTS_TIMEOUT: 100
@@ -49,13 +49,13 @@ services:
   mysql:
     image: mysql:8.0
     container_name: mysql-container
-    command: --default-authentication-plugin=mysql_native_password
+    command: --default-authentication-plugin=caching_sha2_password
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=health
       - MYSQL_DATABASE=notable_health
-      - MYSQL_USER=physicians
-      - MYSQL_PASSWORD=docter
+      - MYSQL_USER=physician
+      - MYSQL_PASSWORD=health
     volumes:
       - ./pckg/db/:/docker-entrypoint-initdb.d
     networks:

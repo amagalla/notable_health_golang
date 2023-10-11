@@ -1,37 +1,43 @@
-## Notable Health Takehome in Golang
+# Docker React Node Boilerplate
 
-This is a takehome from Notable Health but this time in Golang
+Welcome to notable health application. Follow these steps to get started:
 
-## Run Docker-Compose
+## Table of Contents
+- [1. Start the Application](#1-start-the-application)
+- [2. Access the Application](#2-access-the-application)
+- [3. Connect to MySQL](#3-connect-to-mysql)
+- [4. Command List](#4-further-commands)
 
-Installs node dependencies, build's go containers, and launches the application
+### 1. Start the Application
 
-```bash
-  make run
+To start the application, run the following commands:
+
+```shell
+make run
+```
+### 2. Access the Application
+
+You can access the application in your web browser:
+
+- **Client:** [http://localhost:8080](http://localhost:8080)
+- **Server:** [http://localhost:3000](http://localhost:3000)
+
+### 3. Connect to MySQL
+
+To connect to MySQL, use the following command:
+
+```shell
+make mysql
 ```
 
-## Command
+### 4. Further commands
 
-List of useful commands
+You can checkout other commands for this application
 
-```bash
-  make help
+```shell
+make help
 ```
 
-## Server
+Enter your password when prompted
 
-Server runs on PORT 3000
-
-## Client
-
-Client run on PORT 8080
-
-## Mysql
-
-Navigate through mysql database
-
-```bash
-  make mysql
-  mysql -u physicians -p
-  pasword: docter
-```
+Happy coding! 👨‍💻👩‍💻

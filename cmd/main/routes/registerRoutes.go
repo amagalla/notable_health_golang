@@ -1,14 +1,13 @@
 package routes
 
 import (
-	"notable_health/cmd/main/routes/schedules"
+	"notable_health/cmd/main/routes/api"
 
 	"github.com/gin-gonic/gin"
 )
 
 func RegisterRoutes(router *gin.Engine) {
-	router.GET("/api/getPhysicians", schedules.GetPhysicians)
+	router.GET("/api/appointments/allPhysicians", api.AllPhysicians)
 
-	router.POST("/api/insertPhysician", schedules.PostPhysician)
-	router.POST("/api/postAppointment", schedules.PostAppointment)
+	router.POST("/api/appointments/insertPhysicians", api.InsertPhysician)
 }

@@ -11,8 +11,8 @@ var db *sql.DB
 
 func InitDB() {
 	cfg := mysql.Config{
-		User:                 "physicians",
-		Passwd:               "docter",
+		User:                 "physician",
+		Passwd:               "health",
 		Net:                  "tcp",
 		Addr:                 "mysql:3306",
 		DBName:               "notable_health",

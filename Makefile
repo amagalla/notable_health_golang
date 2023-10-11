@@ -22,7 +22,7 @@ run: npm build
 
 # Navigate througy mysql database
 mysql:
-	docker exec -it mysql-container bash
+	docker exec -it mysql-container mysql -u physician -p
 
 docker-nuke:
 	docker stop `docker ps -qa`
