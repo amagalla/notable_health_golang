@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"notable_health/cmd/main/models"
 	"notable_health/pckg/db"
+	"strings"
 )
 
 func GetPhysicianList() ([]models.PhysicianListData, error) {
@@ -73,4 +74,69 @@ func InsertPhysicianData(reqBody *models.InsertPhysicianData) error {
 	}
 
 	return nil
+}
+
+func InsertAppointmentData(reqBody *models.AddAppointmentData, id int) error {
+	db := db.GetDB()
+
+	formattedDate := dateSplit(reqBody.Date_Column)
+
+	checkQuery := "SELECT patientLastName FROM appointments " +
+		"WHERE date_column = ? AND time_column = ? AND IdPhysician = ?"
+
+	insertQuery := "INSERT INTO appointments " +
+		"(patientFirstName, patientLastName, date_column, time_column, kind, IdPhysician) " +
+		"VALUE (?, ?, ?, ?, ?, ?)"
+
+	rows, err := db.Query(
+		checkQuery,
+		formattedDate,
+		reqBody.Time_Column,
+		id,
+	)
+
+	if err != nil {
+		return fmt.Errorf("error querying for appointment data")
+	}
+
+	var appointments []models.CheckAppointmentData
+
+	for rows.Next() {
+		var appointmentData models.CheckAppointmentData
+
+		if err := rows.Scan(
+			&appointmentData.PatientLastName,
+		); err != nil {
+			return fmt.Errorf("error scanning rows")
+		}
+
+		appointments = append(appointments, appointmentData)
+	}
+
+	if len(appointments) > 2 {
+		return fmt.Errorf("too many appointments at this time")
+	}
+
+	_, err = db.Exec(
+		insertQuery,
+		reqBody.PatientFirstName,
+		reqBody.PatientLastName,
+		formattedDate,
+		reqBody.Time_Column,
+		reqBody.Kind,
+		id,
+	)
+
+	if err != nil {
+		return fmt.Errorf("error inserting data into database")
+	}
+
+	return nil
+
+}
+
+func dateSplit(date string) string {
+	dateParts := strings.Split(date, "/")
+
+	return dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0]
 }

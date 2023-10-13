@@ -3,6 +3,7 @@ package api
 import (
 	"notable_health/cmd/main/controller"
 	"notable_health/cmd/main/models"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -54,5 +55,31 @@ func InsertPhysician(c *gin.Context) {
 
 	c.JSON(200, gin.H{
 		"success": "physician inserted",
+	})
+}
+
+func AddAppointment(c *gin.Context) {
+	idPhysician, _ := strconv.Atoi(c.Param("IdPhysician"))
+
+	appointmentData, exists := c.Get("reqBody")
+	if !exists {
+		c.JSON(400, gin.H{
+			"error": "reqBody not found in context",
+		})
+		return
+	}
+
+	reqBody := appointmentData.(models.AddAppointmentData)
+
+	if err := controller.InsertAppointmentData(&reqBody, idPhysician); err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"sucess": "appointment scheduled successfully",
 	})
 }
