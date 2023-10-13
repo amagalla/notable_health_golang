@@ -38,6 +38,47 @@ func GetPhysicianList() ([]models.PhysicianListData, error) {
 	return physicianList, nil
 }
 
+func GetAppointments(id int, date string) ([]models.AppointmentData, error) {
+	db := db.GetDB()
+
+	formattedDate := dateSplit(date)
+
+	getQuery := "SELECT * FROM appointments " +
+		"WHERE IdPhysician = ? AND date_column = ?"
+
+	rows, err := db.Query(
+		getQuery,
+		id,
+		formattedDate,
+	)
+
+	if err != nil {
+		return nil, fmt.Errorf("error querying for data")
+	}
+
+	var appointmentList []models.AppointmentData
+
+	for rows.Next() {
+		var appointmentData models.AppointmentData
+
+		if err := rows.Scan(
+			&appointmentData.IdAppointment,
+			&appointmentData.PatientFirstName,
+			&appointmentData.PatientLastName,
+			&appointmentData.Date_Column,
+			&appointmentData.Time_Column,
+			&appointmentData.Kind,
+			&appointmentData.IdPhysician,
+		); err != nil {
+			return nil, fmt.Errorf("error scanning rows")
+		}
+
+		appointmentList = append(appointmentList, appointmentData)
+	}
+
+	return appointmentList, nil
+}
+
 func CheckValidPhysician(reqBody *models.InsertPhysicianData) error {
 	db := db.GetDB()
 

@@ -9,6 +9,7 @@ import (
 
 func RegisterRoutes(router *gin.Engine) {
 	router.GET("/api/appointments/allPhysicians", api.AllPhysicians)
+	router.GET("/api/appointments/appointmentLookup", api.AppointmentLookup)
 
 	router.POST("/api/appointments/insertPhysicians", api.InsertPhysician)
 	router.POST("/api/appointments/addAppointment/:IdPhysician", middleware.CheckTime, api.AddAppointment)

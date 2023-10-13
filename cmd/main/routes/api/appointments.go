@@ -26,6 +26,25 @@ func AllPhysicians(c *gin.Context) {
 	c.JSON(200, resp)
 }
 
+func AppointmentLookup(c *gin.Context) {
+	IdPhy, _ := strconv.Atoi(c.Query("IdPhysician"))
+	date := c.Query("date_column")
+
+	appointmentListData, err := controller.GetAppointments(IdPhy, date)
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+	}
+
+	resp := models.AppointmentListResponse{
+		Appointments: appointmentListData,
+	}
+
+	c.JSON(200, resp)
+}
+
 func InsertPhysician(c *gin.Context) {
 	var reqBody models.InsertPhysicianData
 

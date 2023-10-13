@@ -22,3 +22,13 @@ type AddAppointmentData struct {
 type CheckAppointmentData struct {
 	PatientLastName string `json:"patientLastName"`
 }
+
+type AppointmentData struct {
+	IdAppointment    int    `json:"IdAppointment"`
+	PatientFirstName string `json:"patientFirstName"`
+	PatientLastName  string `json:"patientLastName"`
+	Date_Column      string `json:"date_column"`
+	Time_Column      string `json:"time_column"`
+	Kind             string `json:"kind"`
+	IdPhysician      int    `json:"IdPhysician"`
+}
