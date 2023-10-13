@@ -83,3 +83,21 @@ func AddAppointment(c *gin.Context) {
 		"sucess": "appointment scheduled successfully",
 	})
 }
+
+func CancelAppointment(c *gin.Context) {
+
+	IdAppointment, _ := strconv.Atoi(c.Query("IdAppointment"))
+	IdPhysician, _ := strconv.Atoi(c.Query("IdPhysician"))
+
+	err := controller.DeleteAppointment(IdAppointment, IdPhysician)
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+	}
+
+	c.JSON(200, gin.H{
+		"success": "appointment cancelled successfully",
+	})
+}

@@ -135,6 +135,24 @@ func InsertAppointmentData(reqBody *models.AddAppointmentData, id int) error {
 
 }
 
+func DeleteAppointment(IdApp int, IdPhy int) error {
+	db := db.GetDB()
+
+	deleteQuery := "DELETE FROM appointments WHERE IdAppointment = ? AND IdPhysician = ?"
+
+	_, err := db.Exec(
+		deleteQuery,
+		IdApp,
+		IdPhy,
+	)
+
+	if err != nil {
+		return fmt.Errorf("error executing delete query")
+	}
+
+	return nil
+}
+
 func dateSplit(date string) string {
 	dateParts := strings.Split(date, "/")
 

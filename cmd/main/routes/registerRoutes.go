@@ -12,4 +12,6 @@ func RegisterRoutes(router *gin.Engine) {
 
 	router.POST("/api/appointments/insertPhysicians", api.InsertPhysician)
 	router.POST("/api/appointments/addAppointment/:IdPhysician", middleware.CheckTime, api.AddAppointment)
+
+	router.DELETE("/api/appointments/cancelAppointment", api.CancelAppointment)
 }
